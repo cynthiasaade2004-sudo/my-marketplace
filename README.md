@@ -1,3 +1,7 @@
+# epershop
+
+Epershop: a multi-vendor marketplace where independent suppliers run their own storefronts. Built with Next.js, Prisma and PostgreSQL, with Stripe payments.
+
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
 ## Getting Started
