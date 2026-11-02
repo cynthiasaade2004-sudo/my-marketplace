@@ -1,0 +1,94 @@
+// use prisma-8
+
+model User {
+  id            String    @id @onCreate(cuid(2))
+  name          String?
+  email         String    @unique
+  password      String
+  role          Role      @default(CUSTOMER)
+  preferredPaymentMethod PaymentMethod @default(CARD)
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @onCreate(now()) @onUpdate(now())
+  store         Store?    
+  orders        Order[]
+  reviews       Review[]
+}
+
+enum Role {
+  CUSTOMER
+  SELLER
+  ADMIN
+}
+
+enum PaymentMethod {
+  CASH
+  CARD
+}
+
+model Store {
+  id          String    @id @onCreate(cuid(2))
+  name        String    @unique
+  slug        String    @unique
+  description String?
+  logo        String?
+  userId      String    @unique
+  user        User      @relation(fields: [userId], references: [id])
+  products    Product[]
+  orders      Order[]
+  createdAt   DateTime  @default(now())
+}
+
+model Product {
+  id          String      @id @onCreate(cuid(2))
+  title       String
+  slug        String      @unique
+  description String
+  price       Decimal
+  stock       Int         @default(0)
+  images      String[]
+  storeId     String
+  store       Store       @relation(fields: [storeId], references: [id])
+  orderItems  OrderItem[]
+  createdAt   DateTime    @default(now())
+}
+
+model Order {
+  id          String        @id @onCreate(cuid(2))
+  userId      String
+  user        User          @relation(fields: [userId], references: [id])
+  storeId     String
+  store       Store         @relation(fields: [storeId], references: [id])
+  total       Decimal
+  status      OrderStatus   @default(PENDING)
+  paymentMethod PaymentMethod @default(CARD)
+  items       OrderItem[]
+  createdAt   DateTime      @default(now())
+}
+
+enum OrderStatus {
+  PENDING
+  PAID
+  SHIPPED
+  DELIVERED
+  CANCELLED
+}
+
+model OrderItem {
+  id        String   @id @onCreate(cuid(2))
+  orderId   String
+  order     Order    @relation(fields: [orderId], references: [id])
+  productId String
+  product   Product  @relation(fields: [productId], references: [id])
+  quantity  Int
+  price     Decimal
+}
+
+model Review {
+  id        String   @id @onCreate(cuid(2))
+  rating    Int
+  comment   String?
+  userId    String
+  user      User     @relation(fields: [userId], references: [id])
+  productId String
+  createdAt DateTime @default(now())
+}
