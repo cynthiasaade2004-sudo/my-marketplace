@@ -1,0 +1,11 @@
+body{font-family:system-ui,sans-serif;margin:0;color:#222;background:#fafafa}
+main{max-width:860px;margin:0 auto;padding:1rem}
+nav{display:flex;gap:1rem;align-items:center;padding:1rem;background:#fff;border-bottom:1px solid #ddd}
+nav .spacer{flex:1}
+a{color:#0a58ca}
+form{display:grid;gap:.6rem;max-width:420px}
+input,textarea,button{font:inherit;padding:.5rem}
+button{cursor:pointer}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:1rem}
+.card{background:#fff;border:1px solid #ddd;border-radius:8px;padding:1rem}
+.error{color:#b00020}
